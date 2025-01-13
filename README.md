@@ -43,6 +43,66 @@ SELECT
 FROM RankedRatings
 WHERE rank = 1;
 ~~~
+### 3. List All Movies Released in a Specific Year (e.g., 2020)
+~~~ sql
+SELECT * 
+FROM netflix
+WHERE type ='movie'
+and
+release_year = 2020;
+~~~
+### 4. Find the Top 5 Countries with the Most Content on Netflix
+~~~ sql
+SELECT TOP 5 
+    value AS new_country,
+    COUNT(show_id) AS total_content
+FROM netflix
+CROSS APPLY STRING_SPLIT(country, ',')
+GROUP BY value
+ORDER BY total_content DESC;
+~~~
+### 5. Identify the Longest Movie
+~~~ sql
+select * from netflix where type='movie'
+and duration=(select max(duration) from netflix);
+~~~
+### 6 Find Content Added in the Last 5 Years
+~~~ sql
+SELECT *
+FROM netflix
+WHERE CAST(date_added AS DATE) >= DATEADD(YEAR, -5, GETDATE());
+~~~
+### 7. Find All Movies/TV Shows by Director 'Rajiv Chilaka'
+~~~ sql
+SELECT *
+FROM netflix where director like'%rajiv chilaka%';
+~~~
+### 8. List All TV Shows with More Than 5 Seasons
+~~~ sql
+SELECT *
+FROM netflix
+WHERE type = 'TV Show'
+  AND CAST(LEFT(duration, CHARINDEX(' ', duration) - 1) AS INT) > 5;
+~~~
+### 9. Count the Number of Content Items in Each Genre
+~~~ sql
+SELECT 
+    value AS genre,
+    COUNT(show_id) AS total_content
+FROM netflix
+CROSS APPLY STRING_SPLIT(listed_in, ',')
+GROUP BY value;
+~~~
+
+
+
+
+
+
+
+
+
+
 
   
   
