@@ -166,6 +166,20 @@ FROM (
 ) AS categorized_content
 GROUP BY category;
 ~~~
+## Steps Taken
+- Data Import: Imported the datasets into SQL Server.
+- Data Cleaning: Ensured the datasets were clean and ready for analysis.
+- SQL Queries: Wrote and executed SQL queries to answer the analysis questions.
+- Insights: Extracted actionable insights from the query results.
+## Technologies Used
+- SQL Server: For data storage and analysis.
+- SQL: To write queries for data analysis.
+## Key Insights
+- The analysis reveals the distribution of movies and TV shows on Netflix, providing insights into content type trends.
+- Common ratings for each type of content highlight audience preferences and target demographics.
+- Trends in content releases by year and country showcase regional content distribution and growth patterns.
+- Genre and duration analysis highlights the diversity of Netflix's offerings and content characteristics.    
+  
 ## Findings and Conclusion
 - Content Distribution: The dataset contains a diverse range of movies and TV shows with varying ratings and genres.
 - Common Ratings: Insights into the most common ratings provide an understanding of the content's target audience.
