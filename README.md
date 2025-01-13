@@ -93,6 +93,86 @@ FROM netflix
 CROSS APPLY STRING_SPLIT(listed_in, ',')
 GROUP BY value;
 ~~~
+### 10.Find each year and the average numbers of content release in India on netflix.
+~~~ sql
+select extract(year from to_date(date_added,'month dd,yyyy')) as year,
+count(*) as yearly_content,
+round(
+count(*)::numeric/select count(*) from netflix where country = 'india')::numeric *
+100,2)as avg_content_per_year
+from netflix
+where country = 'india'
+group by 1;
+SELECT 
+    YEAR(CONVERT(DATE, date_added, 103)) AS year,
+    COUNT(*) AS yearly_content,
+    ROUND(
+        (COUNT(*) * 1.0 / (SELECT COUNT(*) FROM netflix WHERE country = 'india')) * 100, 2
+    ) AS avg_content_per_year
+FROM netflix
+WHERE country = 'india'
+GROUP BY YEAR(CONVERT(DATE, date_added, 103));
+SELECT 
+    YEAR(PARSE(date_added AS DATETIME USING 'en-US')) AS year,
+    COUNT(*) AS yearly_content,
+    ROUND(
+        (COUNT(*) * 1.0 / (SELECT COUNT(*) FROM netflix WHERE country = 'india')) * 100, 2
+    ) AS avg_content_per_year
+FROM netflix
+WHERE country = 'india'
+GROUP BY YEAR(PARSE(date_added AS DATETIME USING 'en-US'));
+~~~
+### 11. List All Movies that are Documentaries
+~~~ sql
+SELECT * 
+FROM netflix
+WHERE listed_in LIKE '%Documentaries';
+~~~
+### 12. Find All Content Without a Director
+~~~ sql
+SELECT * 
+FROM netflix
+WHERE director IS NULL;
+~~~
+### 13. Find How Many Movies Actor 'Salman Khan' Appeared in the Last 10 Years
+~~~ sql
+SELECT * 
+FROM netflix
+WHERE cast LIKE '%Salman Khan%'
+  AND release_year >= YEAR(GETDATE()) - 10;
+~~~
+### 14. Find the Top 10 Actors Who Have Appeared in the Highest Number of Movies Produced in India
+~~~ sql
+SELECT TOP 10
+    value AS actor,
+    COUNT(*) AS total_content
+FROM netflix
+CROSS APPLY STRING_SPLIT(cast, ',')
+WHERE country LIKE '%India%'
+GROUP BY value
+ORDER BY total_content DESC;
+~~~
+### 15. Categorize Content Based on the Presence of 'Kill' and 'Violence' Keywords
+~~~ sql
+SELECT 
+    category,
+    COUNT(*) AS content_count
+FROM (
+    SELECT 
+        CASE 
+            WHEN description LIKE '%kill%' OR description LIKE '%violence%' THEN 'Bad'
+            ELSE 'Good'
+        END AS category
+    FROM netflix
+) AS categorized_content
+GROUP BY category;
+~~~
+
+
+
+
+
+
 
 
 
