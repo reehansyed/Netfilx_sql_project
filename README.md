@@ -11,6 +11,18 @@ This project involves a comprehensive analysis of Netflix's movies and TV shows 
 ## Dataset
 The data for this project is sourced from the Kaggle dataset:
 - Dataset Link: [Movies Dataset](https://www.kaggle.com/datasets/shivamb/netflix-shows?resource=download)
+## Business Problems and Solutions 
+~~~sql
+1. Count the Number of Movies vs TV Shows
+SELECT 
+    type,
+    COUNT(*)
+FROM netflix
+GROUP BY 1;
+~~~
+**Objective:** Determine the distribution of content types on Netflix.
+  
+  
   
 
 
