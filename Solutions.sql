@@ -76,7 +76,7 @@ FROM netflix
 CROSS APPLY STRING_SPLIT(listed_in, ',')
 GROUP BY value;
 
---10.Find each year and the average numbers of content release in India on netflix.
+--10.Find the average number of content releases per year in India on Netflix and return the top 5 years with the highest averages.
 select extract(year from to_date(date_added,'month dd,yyyy')) as year,
 count(*) as yearly_content,
 round(
